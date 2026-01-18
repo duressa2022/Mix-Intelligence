@@ -24,7 +24,7 @@ export default function LoginPage() {
         </div>
 
         <div className="glass-card p-10 rounded-[3rem] border border-white/5 shadow-2xl relative overflow-hidden group">
-          <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
           <AuthForm mode="login" />
         </div>
 

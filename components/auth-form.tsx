@@ -84,6 +84,7 @@ export default function AuthForm({ mode, onSuccess }: AuthFormProps) {
                 placeholder="Neural Identity"
                 required={mode === 'register'}
                 className="h-16 bg-white/5 border-white/10 rounded-2xl px-6 text-[11px] font-bold uppercase tracking-widest text-white placeholder:text-white/20 focus:bg-white/10 focus:border-white/20 transition-all"
+                disabled={loading}
               />
             </div>
             <div className="space-y-3">
@@ -94,6 +95,7 @@ export default function AuthForm({ mode, onSuccess }: AuthFormProps) {
                 onChange={handleChange}
                 placeholder="Planetary Sector"
                 className="h-16 bg-white/5 border-white/10 rounded-2xl px-6 text-[11px] font-bold uppercase tracking-widest text-white placeholder:text-white/20 focus:bg-white/10 focus:border-white/20 transition-all"
+                disabled={loading}
               />
             </div>
           </div>
@@ -109,6 +111,7 @@ export default function AuthForm({ mode, onSuccess }: AuthFormProps) {
             placeholder="node@planetary.resilience"
             required
             className="h-16 bg-white/5 border-white/10 rounded-2xl px-6 text-[11px] font-bold uppercase tracking-widest text-white placeholder:text-white/20 focus:bg-white/10 focus:border-white/20 transition-all"
+            disabled={loading}
           />
         </div>
 
@@ -122,6 +125,7 @@ export default function AuthForm({ mode, onSuccess }: AuthFormProps) {
             placeholder="••••••••••••"
             required
             className="h-16 bg-white/5 border-white/10 rounded-2xl px-6 text-[11px] font-bold uppercase tracking-widest text-white placeholder:text-white/20 focus:bg-white/10 focus:border-white/20 transition-all"
+            disabled={loading}
           />
         </div>
 
