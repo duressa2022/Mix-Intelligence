@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -14,10 +14,13 @@ import {
   CheckCircle,
   Shield,
   Leaf,
-  Users
+  Users,
+  Menu,
+  X
 } from 'lucide-react';
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -96,17 +99,19 @@ export default function Home() {
 
       {/* Modern High-End Top Nav */}
       <nav className="border-b border-white/5 bg-black/40 backdrop-blur-2xl sticky top-0 z-[100]">
-        <div className="max-w-[1400px] mx-auto px-8 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-6 group cursor-pointer transition-all">
-            <div className="p-3 bg-white/5 border border-white/10 rounded-2xl group-hover:scale-110 group-hover:bg-white/10 transition-all shadow-[0_0_30px_rgba(255,255,255,0.05)]">
-              <img src="/logo.png" alt="Mix Logo" className="w-6 h-6 object-contain" />
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 py-4 md:py-6 flex items-center justify-between">
+          <div className="flex items-center gap-4 md:gap-6 group cursor-pointer transition-all">
+            <div className="p-2 md:p-3 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl group-hover:scale-110 group-hover:bg-white/10 transition-all shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+              <img src="/logo.png" alt="Mix Logo" className="w-5 h-5 md:w-6 md:h-6 object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-black text-white italic tracking-tighter uppercase leading-none">Mix</span>
-              <span className="text-[9px] font-black text-white/30 tracking-[0.4em] uppercase mt-1">Drought Intelligence</span>
+              <span className="text-lg md:text-xl font-black text-white italic tracking-tighter uppercase leading-none">Mix</span>
+              <span className="text-[8px] md:text-[9px] font-black text-white/30 tracking-[0.4em] uppercase mt-1">Drought Intelligence</span>
             </div>
           </div>
-          <div className="flex items-center gap-10">
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-10">
             <Link href="/login" className="text-[10px] font-black text-white/60 hover:text-white uppercase tracking-[0.3em] transition-colors">Sign In</Link>
             <Link href="/register">
               <Button className="bg-white text-black font-black uppercase tracking-[0.2em] text-[10px] px-10 py-6 rounded-2xl hover:bg-white/90 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
@@ -114,37 +119,63 @@ export default function Home() {
               </Button>
             </Link>
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden p-2 text-white/60 hover:text-white transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* Mobile Nav Overlay */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-2xl border-b border-white/5 p-8 flex flex-col gap-8 animate-in fade-in slide-in-from-top-4 duration-300">
+            <Link
+              href="/login"
+              className="text-xs font-black text-white/60 hover:text-white uppercase tracking-[0.4em]"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Sign In
+            </Link>
+            <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
+              <Button className="w-full bg-white text-black font-black uppercase tracking-[0.2em] text-[10px] py-6 rounded-2xl">
+                Launch System
+              </Button>
+            </Link>
+          </div>
+        )}
       </nav>
 
       <main className="relative z-10">
         {/* Dynamic Hero Section */}
-        <section className="relative px-8 pt-32 pb-40 text-center">
-          <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-white/5 border border-white/10 rounded-full mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <section className="relative px-6 md:px-8 pt-20 md:pt-32 pb-24 md:pb-40 text-center">
+          <div className="inline-flex items-center gap-3 px-4 md:px-6 py-2 md:py-2.5 bg-white/5 border border-white/10 rounded-full mb-8 md:mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[9px] font-black text-white/60 uppercase tracking-[0.4em]">Grid Status :: Fully Operational</span>
+            <span className="text-[8px] md:text-[9px] font-black text-white/60 uppercase tracking-[0.3em] md:tracking-[0.4em]">Grid Status :: Fully Operational</span>
           </div>
-          <h1 className="max-w-5xl mx-auto text-3xl md:text-4xl lg:text-[4rem] font-black text-white tracking-[-0.04em] leading-tight mb-8 italic uppercase animate-in fade-in zoom-in-95 duration-1000 whitespace-nowrap">
+          <h1 className="max-w-5xl mx-auto text-3xl md:text-5xl lg:text-[4rem] font-black text-white tracking-[-0.04em] leading-[1.1] mb-6 md:mb-8 italic uppercase animate-in fade-in zoom-in-95 duration-1000">
             The Future of <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">Drought Dynamics</span>
           </h1>
-          <p className="max-w-xl mx-auto text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-[0.3em] leading-relaxed opacity-60 mb-10 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+          <p className="max-w-xl mx-auto text-[9px] md:text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] md:tracking-[0.3em] leading-relaxed opacity-60 mb-8 md:mb-10 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
             Industry-leading neural engine for planetary-scale monitoring.
             Architecting climate resilience.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
-            <Link href="/register">
-              <Button size="lg" className="h-16 px-12 bg-white text-black font-black uppercase tracking-[0.3em] text-[10px] rounded-2xl hover:bg-white/90 transition-all hover:scale-105 shadow-[0_0_50px_rgba(255,255,255,0.1)] group relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+            <Link href="/register" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full h-14 md:h-16 px-10 md:px-12 bg-white text-black font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] rounded-xl md:rounded-2xl hover:bg-white/90 transition-all hover:scale-105 shadow-[0_0_50px_rgba(255,255,255,0.1)] group relative overflow-hidden">
                 Generate Neural Access
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="h-16 px-12 bg-white/5 border-white/10 text-white font-black uppercase tracking-[0.3em] text-[10px] rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all">
+            <Button size="lg" variant="outline" className="w-full sm:w-auto h-14 md:h-16 px-10 md:px-12 bg-white/5 border-white/10 text-white font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] rounded-xl md:rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all">
               System Overview
             </Button>
           </div>
         </section>
 
         {/* Feature Grid with Cinematic Cards */}
-        <section className="px-8 py-32 bg-white/[0.02] border-y border-white/5 reveal-section reveal-hidden">
+        <section className="px-6 md:px-8 py-20 md:py-32 bg-white/[0.02] border-y border-white/5 reveal-section reveal-hidden">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col space-y-4 mb-16 text-center">
               <span className="text-[9px] font-black text-blue-500 uppercase tracking-[0.5em]">Core Capabilities</span>
@@ -170,8 +201,8 @@ export default function Home() {
         </section>
 
         {/* Cinematic Stats Section */}
-        <section className="px-8 py-40 reveal-section reveal-hidden">
-          <div className="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+        <section className="px-6 md:px-8 py-24 md:py-40 reveal-section reveal-hidden">
+          <div className="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             {[
               { l: 'Network Latency', v: '0.04ms' },
               { l: 'Data Nodes', v: '12,400+' },
@@ -187,7 +218,7 @@ export default function Home() {
         </section>
 
         {/* Benefits Architecture */}
-        <section className="px-8 py-32 bg-white/[0.02] reveal-section reveal-hidden">
+        <section className="px-6 md:px-8 py-20 md:py-32 bg-white/[0.02] reveal-section reveal-hidden">
           <div className="max-w-4xl mx-auto">
             <h3 className="text-sm font-black text-white/30 uppercase tracking-[0.5em] mb-12 text-center">System Benefits</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -204,16 +235,16 @@ export default function Home() {
         </section>
 
         {/* CTA Matrix */}
-        <section className="px-8 py-32 reveal-section reveal-hidden">
-          <div className="max-w-4xl mx-auto rounded-[2rem] p-16 text-center glass-card border-white/5 relative overflow-hidden group shadow-[0_0_100px_rgba(255,255,255,0.05)] text-white">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] -mr-64 -mt-64" />
-            <Shield className="mx-auto mb-8 text-white opacity-40 group-hover:scale-110 group-hover:rotate-12 transition-all duration-700" size={48} />
-            <h3 className="text-4xl font-black mb-6 italic uppercase tracking-tighter">Initialize Protocol</h3>
-            <p className="max-w-xl mx-auto text-[9px] font-bold uppercase tracking-widest text-muted-foreground opacity-60 mb-10 leading-relaxed">
+        <section className="px-6 md:px-8 py-20 md:py-32 reveal-section reveal-hidden">
+          <div className="max-w-4xl mx-auto rounded-[1.5rem] md:rounded-[2rem] p-8 md:p-16 text-center glass-card border-white/5 relative overflow-hidden group shadow-[0_0_100px_rgba(255,255,255,0.05)] text-white">
+            <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-blue-600/10 blur-[100px] md:blur-[150px] -mr-32 md:-mr-64 -mt-32 md:-mt-64" />
+            <Shield className="mx-auto mb-6 md:mb-8 text-white opacity-40 group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 w-10 h-10 md:w-12 md:h-12" />
+            <h3 className="text-2xl md:text-4xl font-black mb-4 md:mb-6 italic uppercase tracking-tighter">Initialize Protocol</h3>
+            <p className="max-w-xl mx-auto text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] md:tracking-widest text-muted-foreground opacity-60 mb-8 md:mb-10 leading-relaxed">
               Join the elite network of water resource managers and agricultural strategists building the future of planetary resilience.
             </p>
             <Link href="/register">
-              <Button size="lg" className="h-16 px-16 bg-white text-black font-black uppercase tracking-[0.3em] text-[10px] rounded-2xl hover:bg-white/90 hover:scale-105 transition-all shadow-[0_0_50px_rgba(255,255,255,0.1)]">
+              <Button size="lg" className="w-full sm:w-auto h-14 md:h-16 px-12 md:px-16 bg-white text-black font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[10px] rounded-xl md:rounded-2xl hover:bg-white/90 hover:scale-105 transition-all shadow-[0_0_50px_rgba(255,255,255,0.1)]">
                 Launch Dashboard
               </Button>
             </Link>
@@ -222,16 +253,16 @@ export default function Home() {
       </main>
 
       {/* Corporate Black Footer */}
-      <footer className="border-t border-white/5 bg-black/60 px-8 py-20 relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+      <footer className="border-t border-white/5 bg-black/60 px-6 md:px-8 py-16 md:py-20 relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-12">
           <div className="flex items-center gap-4">
-            <img src="/logo.png" alt="Mix Logo" className="w-6 h-6 object-contain opacity-40" />
+            <img src="/logo.png" alt="Mix Logo" className="w-5 h-5 md:w-6 md:h-6 object-contain opacity-40" />
             <div className="flex flex-col">
-              <span className="text-lg font-black text-white italic tracking-tighter uppercase opacity-40">Mix</span>
-              <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.4em]">© 2024 Planetary Grid Operations</span>
+              <span className="text-base md:text-lg font-black text-white italic tracking-tighter uppercase opacity-40">Mix</span>
+              <span className="text-[7px] md:text-[8px] font-black text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em]">© 2024 Planetary Grid Operations</span>
             </div>
           </div>
-          <p className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em] md:text-right leading-loose max-w-md ml-auto">
+          <p className="text-[8px] md:text-[9px] font-black text-white/20 uppercase tracking-[0.2em] md:tracking-[0.3em] md:text-right leading-loose max-w-md md:ml-auto">
             Advanced drought dynamics and management platform engineered for water resource planning and planetary resilience grid. Unauthorized telemetry prohibited.
           </p>
         </div>
